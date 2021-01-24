@@ -53,15 +53,23 @@ d3.csv("assets/data/data.csv").then(function(states){
     });*/
 
 
-    //Draw x axis
+    //Draw X axis
     let x_axis = d3.scaleLinear()
       .domain(d3.extent(states, function(state) { return parseInt(state.age); }))
       .range([ 0, width ]);
 
       svg.append("g")
-      .attr("transform", "translate(20," + height + ")")
+      .attr("transform", "translate(25," + height + ")")
       .call(d3.axisBottom(x_axis));
 
+    //Draw Y axis
+    let y_axis = d3.scaleLinear()
+      .domain([0, d3.max(states, function(state) { return +state.smokes; })])
+      .range([ height, 0]);
+
+      svg.append("g")
+      .attr("transform", "translate(25,0)")
+      .call(d3.axisLeft(y_axis));
 
     /*chartGroup
         .append("path")
