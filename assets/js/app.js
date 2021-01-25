@@ -2,7 +2,7 @@
 
 /* SVG OBJECT */
 // Settting up svg canvas size
-let svgWidth = 960
+let svgWidth = 600
 let svgHeight = 400
 
 //Create SVG object
@@ -12,9 +12,9 @@ let svg = d3.select('#scatter').append('svg').attr("height", svgHeight).attr("wi
 /* SCATTER PLOT */
 //Setting up where the scatter plot (an SVG chart group object) will be located
 let margin = {
-    top: 20,
+    top: 10,
     right: 40,
-    bottom: 60,
+    bottom: 40,
     left: 50
 }
 
@@ -27,7 +27,6 @@ let chartGroup = svg.append("g")
     .attr("transform",`translate(${margin.left}, ${margin.top})`)
 
 
-   
 //Retrieing data from CSV file
 d3.csv("assets/data/data.csv").then(function(states){
     //Creating arrays to store values from data
@@ -39,43 +38,59 @@ d3.csv("assets/data/data.csv").then(function(states){
    let y_smokes = []
    //let y_healthcare = []
 
-   
-  
-  //Storing values from data in arrays
-   /* states.forEach(state =>{
-        //x_poverty.push(parseInt(state.poverty));
-        x_age.push(parseInt(state.age));
-        //x_income.push(parseInt(state.income));
-        //y_obese.push(parseInt(state.obese));
-        y_smokes.push(parseInt(state.smokes));
-        //y_healthcare.push(parseInt(state.healthcare));
+   let x_coord = parseFloat(state.age)
+   let y_coord = parseFloat(state.smokes)
 
-    });*/
-
+   console.log(states)
 
     //Draw X axis
     let x_axis = d3.scaleLinear()
-      .domain(d3.extent(states, function(state) { return parseInt(state.age); }))
+      .domain(d3.extent(states, function(state) { return parseFloat(state.age); }))
       .range([ 0, width ]);
 
-      svg.append("g")
-      .attr("transform", "translate(25," + height + ")")
+      chartGroup.append("g")
+      .attr("transform", `translate(100, ${height+10})`)
       .call(d3.axisBottom(x_axis));
 
     //Draw Y axis
     let y_axis = d3.scaleLinear()
-      .domain([0, d3.max(states, function(state) { return +state.smokes; })])
+      .domain([0, d3.max(states, function(state) { return + parseFloat(state.smokes); })])
       .range([ height, 0]);
 
-      svg.append("g")
-      .attr("transform", "translate(25,0)")
+      chartGroup.append("g")
+      .attr("transform", "translate(100,10)")
       .call(d3.axisLeft(y_axis));
 
-    /*chartGroup
-        .append("path")
-        .attr("d", line1(donutData))
-        .attr("class","line green")*/
+    
+      //Draw scatter using circles 
+     // let circles = d3.symbol().type(d3.symbolCircle)
+     chartGroup.append("g")
+     .selectAll("circle")
+     .data(states).enter()
+     .append("circle")
+     .attr("cx", state=> parseFloat(state.age)+100.0)
+     .attr("cy", state=> parsestate.smokes)
+     .attr("r", 6)               
+    
 
+
+      /*svg.append("g")
+      //.attr("stroke-width", 1.5)
+      //.attr("font-family", "sans-serif")
+      //.attr("font-size", 10)
+      .selectAll(".symbol")
+      .data(states)
+      .enter()
+      .append("path")
+      .attr("transform", state => `translate(${state.age},${state.smokes})`)
+      //.attr("moveTo", state=>`${state.age},${state.smokes}`)
+      .attr('d', d3.symbol().type( d3.symbolCircle) );
+      //.attr("transform", state => `translate(${state.age},${state.smokes})`)
+      //.attr("d", state => moveTo(state.age,state.smokes))
+      //.append(d3.symbol().type(d3.symbolCircle))
+      
+      //.attr("fill", d => color(d.category))*/
+      
    
     
 })
