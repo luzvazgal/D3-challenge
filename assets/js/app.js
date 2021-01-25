@@ -63,34 +63,28 @@ d3.csv("assets/data/data.csv").then(function(states){
       .call(d3.axisLeft(y_axis));
 
 
-      let shape = d3.scaleOrdinal(states.map(state => state.age), d3.symbolCircle)
+      //Adding path to represent plots in chart 
+      //let shape = d3.scaleOrdinal(states.map(state => state.age), d3.symbolCircle)
 
-      svg.append("g")
+      chartGroup.append("g")
       //.attr("stroke-width", 1.5)
       //.attr("font-family", "sans-serif")
       //.attr("font-size", 10)
-      .selectAll("path")
+      //.selectAll("path")
+      .selectAll("circle")
       .data(states)
       .enter()
-      .append("path")
-      .attr("transform", state => `translate(${x_axis(state.age)},${y_axis(state.smokes)})`)
+      //.append("path")
+      .append("circle")
+      .attr("cx", state => x_axis(state.age))
+      .attr("cy", state => y_axis(state.smokes) )
+      .attr("r", 8)
+      //.attr("transform", state => `translate(${x_axis(state.age)},${y_axis(state.smokes)})`)
       //.attr("moveTo", state=>`${state.age},${state.smokes}`)
-      .attr('d', state=>shape(parseFloat(state.age) ))
-      //.attr("transform", state => `translate(${state.age},${state.smokes})`)
-      //.attr("d", state => moveTo(state.age,state.smokes))
-      //.append(d3.symbol().type(d3.symbolCircle))
-      
+      //.attr('d', state=>shape(parseFloat(state.age) ))
       //.attr("fill", d => color(d.category))*/
     
-      //Draw scatter using circles 
-     // let circles = d3.symbol().type(d3.symbolCircle)
-    /* chartGroup.append("g")
-     .selectAll("circle")
-     .data(states).enter()
-     .append("circle")
-     .attr("cx", state=> parseFloat(state.age))
-     .attr("cy", state=> parseFloat(state.smokes))
-     .attr("r", 6)       */        
+           
     
 
 
