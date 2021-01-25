@@ -49,7 +49,7 @@ d3.csv("assets/data/data.csv").then(function(states){
       //.range([margin.left, width - margin.right]);
 
       chartGroup.append("g")
-      .attr("transform", `translate(100, ${height+10})`)
+      .attr("transform", `translate(0, ${height})`)
       .call(d3.axisBottom(x_axis));
 
     //Draw Y axis
@@ -59,7 +59,7 @@ d3.csv("assets/data/data.csv").then(function(states){
       //.range([height - margin.bottom, margin.top])
 
       chartGroup.append("g")
-      .attr("transform", "translate(100,10)")
+      //.attr("transform", "translate(100,10)")
       .call(d3.axisLeft(y_axis));
 
 
