@@ -38,60 +38,66 @@ d3.csv("assets/data/data.csv").then(function(states){
    let y_smokes = []
    //let y_healthcare = []
 
-   
-
+  
    console.log(states)
 
     //Draw X axis
     let x_axis = d3.scaleLinear()
-      .domain(d3.extent(states, function(state) { return parseFloat(state.age); }))
+      .domain(d3.extent(states, function(state) { return parseFloat(state.income); }))
       .range([ 0, width ]);
-      //.range([margin.left, width - margin.right]);
 
       chartGroup.append("g")
       .attr("transform", `translate(0, ${height})`)
       .call(d3.axisBottom(x_axis));
 
+    //Label for X axis
+    chartGroup.append("text")
+    .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
+    .attr("class", "aText")
+    .text("Annual Income");
+
     //Draw Y axis
     let y_axis = d3.scaleLinear()
-      .domain([0, d3.max(states, function(state) { return + parseFloat(state.smokes); })])
+      .domain([0, d3.max(states, function(state) { return + parseFloat(state.obesity); })])
       .range([ height, 0]);
-      //.range([height - margin.bottom, margin.top])
 
       chartGroup.append("g")
-      //.attr("transform", "translate(100,10)")
       .call(d3.axisLeft(y_axis));
 
+    //Label for Y axis
+    chartGroup.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", 0 - margin.left)
+    .attr("x",0 - (height / 2))
+    .attr("dy", "1em")
+    .attr("class", "aText")
+    .text("Obesity");
 
-      //Adding path to represent plots in chart 
-      //let shape = d3.scaleOrdinal(states.map(state => state.age), d3.symbolCircle)
 
-      chartGroup.append("g")
-      //.attr("stroke-width", 1.5)
-      //.attr("font-family", "sans-serif")
-      //.attr("font-size", 10)
-      //.selectAll("path")
-      .selectAll("circle")
+      //Adding scatter plots to chart using SVG circle'
+      let scatters = chartGroup.append("g")
+
+      scatters.selectAll("circle")
       .data(states)
       .enter()
       //.append("path")
       .append("circle")
-      .attr("cx", state => x_axis(state.age))
-      .attr("cy", state => y_axis(state.smokes) )
-      .attr("r", 8)
-      //.attr("transform", state => `translate(${x_axis(state.age)},${y_axis(state.smokes)})`)
-      //.attr("moveTo", state=>`${state.age},${state.smokes}`)
-      //.attr('d', state=>shape(parseFloat(state.age) ))
-      //.attr("fill", d => color(d.category))*/
-    
-           
-    
-
-
+      .attr("cx", state => x_axis(state.income))
+      .attr("cy", state => y_axis(state.obesity) )
+      .attr("r", 13)
+      .attr('class', 'stateCircle')
       
-      
-   
-    
+
+      //Adding text to circles
+      scatters.selectAll("text")
+      .data(states)
+      .enter()
+      .append("text")
+      .attr("x", state => x_axis(state.income))
+      .attr("y", state => y_axis(state.obesity) )
+      .text(state=>state.abbr)
+      .attr("class", "stateText")
+
 })
 .catch(e=> console.log(e))
 
