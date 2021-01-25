@@ -2,8 +2,8 @@
 
 /* SVG OBJECT */
 // Settting up svg canvas size
-let svgWidth = 600
-let svgHeight = 400
+let svgWidth = 900
+let svgHeight = 450
 
 //Create SVG object
 let svg = d3.select('#scatter').append('svg').attr("height", svgHeight).attr("width", svgWidth)
@@ -71,7 +71,7 @@ d3.csv("assets/data/data.csv").then(function(states){
     .attr("x",0 - (height / 2))
     .attr("dy", "1em")
     .attr("class", "aText")
-    .text("Obesity");
+    .text("Obesity Level");
 
 
       //Adding scatter plots to chart using SVG circle'
@@ -101,22 +101,5 @@ d3.csv("assets/data/data.csv").then(function(states){
 })
 .catch(e=> console.log(e))
 
-/**
- * As per lack of imagination of which variables are chosen to create scatter plot, they are divided into x and y axis values.
- * This function will choose randomly an 'x, y' couple to build a plot
- */
-/*function choose_xy_variables(){
-let random_x
-let random_y
-
-
-}*/
-
-/**
- * Draw scatter plot Income vs Smokes
- */
-function paint_plot(){
-    d3.select('scatter')
     
    
-}
