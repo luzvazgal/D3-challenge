@@ -29,16 +29,7 @@ let chartGroup = svg.append("g")
 
 //Retrieing data from CSV file
 d3.csv("assets/data/data.csv").then(function(states){
-    //Creating arrays to store values from data
-   //let x_poverty = []
-   let x_age = []
-   //let x_income = []
-   
-   //let y_obese = []
-   let y_smokes = []
-   //let y_healthcare = []
 
-  
    console.log(states)
 
     //Draw X axis
@@ -54,7 +45,7 @@ d3.csv("assets/data/data.csv").then(function(states){
     chartGroup.append("text")
     .attr("transform", "translate(" + (width/2) + " ," + (height + margin.top + 20) + ")")
     .attr("class", "aText")
-    .text("Annual Income");
+    .text("Annual Income ($)");
 
     //Draw Y axis
     let y_axis = d3.scaleLinear()
